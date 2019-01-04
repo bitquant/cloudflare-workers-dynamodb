@@ -1,0 +1,26 @@
+{
+  "name": "cloudflare-workers-dynamodb",
+  "version": "0.0.1",
+  "description": "Query DynamoDB from Cloudflare Workers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitquant/cloudflare-workers-dynamodb.git"
+  },
+  "keywords": [
+    "cloudflare workers",
+    "dynamodb"
+  ],
+  "author": "bitquant",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bitquant/cloudflare-workers-dynamodb/issues"
+  },
+  "homepage": "https://github.com/bitquant/cloudflare-workers-dynamodb#readme",
+  "dependencies": {
+    "crypto-js": "3.1.9-1"
+  }
+}
