@@ -1,4 +1,5 @@
-const CryptoJS = require("crypto-js");
+var SHA256 = require('crypto-js/sha256');
+var HmacSHA256 = require('crypto-js/hmac-sha256');
 
 var accessKey = null;
 var secretKey = null;
@@ -15,10 +16,10 @@ function init(config) {
 }
 
 function getSignatureKey(key, dateStamp, regionName, serviceName) {
-    var keyDate = CryptoJS.HmacSHA256(dateStamp, "AWS4" + key);
-    var keyRegion = CryptoJS.HmacSHA256(regionName, keyDate);
-    var keyService = CryptoJS.HmacSHA256(serviceName, keyRegion);
-    var keySigning = CryptoJS.HmacSHA256("aws4_request", keyService)
+    var keyDate = HmacSHA256(dateStamp, "AWS4" + key);
+    var keyRegion = HmacSHA256(regionName, keyDate);
+    var keyService = HmacSHA256(serviceName, keyRegion);
+    var keySigning = HmacSHA256("aws4_request", keyService)
     return keySigning;
 }
 
@@ -77,15 +78,15 @@ function signAndSendRequest(region, target, body) {
     const canonicalQuerystring = '';
     const canonicalHeaders = `host:${host}\n` + `x-amz-date:${amzdate}\n`;
     const signedHeaders = 'host;x-amz-date';
-    const payloadHash = CryptoJS.SHA256(body);
+    const payloadHash = SHA256(body);
     const algorithm = 'AWS4-HMAC-SHA256';
 
     const canonicalRequest = method + '\n' + canonicalUri + '\n' + canonicalQuerystring + '\n' + canonicalHeaders + '\n' + signedHeaders + '\n' + payloadHash;
     const credentialScope = datestamp + '/' + region + '/' + service + '/' + 'aws4_request';
-    const stringToSign = algorithm + '\n' +  amzdate + '\n' +  credentialScope + '\n' +  CryptoJS.SHA256(canonicalRequest);
+    const stringToSign = algorithm + '\n' +  amzdate + '\n' +  credentialScope + '\n' +  SHA256(canonicalRequest);
 
     const signingKey = getSignatureKey(secretKey, datestamp, region, service);
-    const signature = CryptoJS.HmacSHA256(stringToSign, signingKey);
+    const signature = HmacSHA256(stringToSign, signingKey);
 
     const authorizationHeader = algorithm + ' ' + 'Credential=' + accessKey + '/' + credentialScope + ', ' +  'SignedHeaders=' + signedHeaders + ', ' + 'Signature=' + signature;
 
