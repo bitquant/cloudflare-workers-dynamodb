@@ -1,6 +1,6 @@
 {
   "name": "cloudflare-workers-dynamodb",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Query DynamoDB from Cloudflare Workers",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/bitquant/cloudflare-workers-dynamodb#readme",
   "dependencies": {
-    "crypto-js": "3.1.9-1"
+    "crypto-js": "3.1.9-1",
+    "uuid": "3.3.2"
   }
 }
