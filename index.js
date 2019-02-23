@@ -220,8 +220,15 @@ async function getDynamoItem(pkey, skey, type, region) {
 
 async function putDynamoItem(pkey, skey, value) {
 
-    let itemValue = (value instanceof Uint8Array) ?
-        { "B": btoa(String.fromCharCode(...value)) } : { "S": value };
+    let itemValue = { "S": value };
+
+    if (value instanceof Uint8Array) {
+        let byteString = '';
+        for (let n of value) {
+            byteString += String.fromCharCode(n);
+        }
+        itemValue = { "B": btoa(byteString) }
+    }
 
     const requestObject = {
         "TableName": tableName,
